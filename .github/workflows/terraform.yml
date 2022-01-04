@@ -11,7 +11,7 @@ on:
         required: true
       mirror_ssh_private_key:
         required: true
-      github_token:
+      token:
         required: true
 
 jobs:
@@ -54,7 +54,7 @@ jobs:
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
-          github-token: ${{ secrets.github_token }}
+          github-token: ${{ secrets.token }}
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`

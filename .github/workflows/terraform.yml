@@ -6,6 +6,9 @@ on:
       workingdir:
         required: true
         type: string
+      apply_branch:
+        type: string
+        default: 'master'
     secrets:
       tf_api_token:
         required: true
@@ -81,5 +84,5 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == "refs/heads/${{ inputs.apply_branch }}" && github.event_name == 'push'
         run: terraform apply -auto-approve

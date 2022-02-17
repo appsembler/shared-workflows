@@ -84,7 +84,7 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1
       - name: debug
-        if: github.ref == "refs/heads/${{ inputs.apply_branch }}" && github.event_name == 'push'
+        if: ${{ github.ref == 'refs/heads/' + inputs.apply_branch && github.event_name == 'push' }}
         run: |
           echo ${{ inputs.apply_branch }}
           echo ${{ github.ref }}

@@ -83,6 +83,12 @@ jobs:
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
+      - name: debug
+        if: github.ref == "refs/heads/${{ inputs.apply_branch }}" && github.event_name == 'push'
+        script: |
+          echo ${{ inputs.apply_branch }}
+          echo ${{ github.ref }}
+          echo ${{ github.event_name }}
       - name: Terraform Apply
         if: github.ref == "refs/heads/${{ inputs.apply_branch }}" && github.event_name == 'push'
         run: terraform apply -auto-approve

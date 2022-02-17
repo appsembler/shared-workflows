@@ -85,7 +85,7 @@ jobs:
         run: exit 1
       - name: debug
         if: github.ref == "refs/heads/${{ inputs.apply_branch }}" && github.event_name == 'push'
-        script: |
+        run: |
           echo ${{ inputs.apply_branch }}
           echo ${{ github.ref }}
           echo ${{ github.event_name }}

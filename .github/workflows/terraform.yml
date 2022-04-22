@@ -9,6 +9,9 @@ on:
       apply_branch:
         type: string
         default: 'refs/heads/master'
+      tf_version:
+        type: string
+        default: '1.0.0'
     secrets:
       tf_api_token:
         required: true
@@ -31,7 +34,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.tf_api_token }}
-          terraform_version: 1.0.0
+          terraform_version: ${{ inputs.tf_version }}
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check

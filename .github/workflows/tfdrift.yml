@@ -1,0 +1,38 @@
+name: 'Terraform Drift Detection Workflow'
+
+on:
+  workflow_call:
+    inputs:
+      workingdir:
+        required: true
+        type: string
+      tf_version:
+        type: string
+        default: '1.0.0'
+    secrets:
+      tf_api_token:
+        required: true
+      token:
+        required: true
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.workingdir }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          cli_config_credentials_token: ${{ secrets.tf_api_token }}
+          terraform_version: ${{ inputs.tf_version }}
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -detailed-exitcode

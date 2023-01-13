@@ -3,3 +3,4 @@
 * @thraxil
 
 .github/workflows/terraform.yml @appsembler/terraform
+.github/workflows/tfdrift.yml @appsembler/terraform

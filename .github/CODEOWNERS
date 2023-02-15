@@ -1,6 +1,6 @@
 # see: https://appsembler.atlassian.net/wiki/spaces/ED/pages/2227503161/CODEOWNERS
 
-* @thraxil
+* @xscrio
 
 .github/workflows/terraform.yml @appsembler/terraform
 .github/workflows/tfdrift.yml @appsembler/terraform

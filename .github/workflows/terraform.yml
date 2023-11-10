@@ -40,12 +40,14 @@ jobs:
         run: terraform fmt -check
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.mirror_ssh_private_key }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          terraform init
         env:
-          GIT_SSH_COMMAND: "echo '${{ secrets.mirror_ssh_private_key }}' > id_rsa
-          && ssh-keyscan github.com > known_hosts
-          && chmod 600 id_rsa known_hosts
-          && ssh -i ./id_rsa -o UserKnownHostsFile=./known_hosts"
+          GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=~/.ssh/known_hosts"
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
